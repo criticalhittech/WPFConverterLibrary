@@ -1,0 +1,47 @@
+﻿<Window x:Class="WPFConverterLibrary.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPFConverterLibrary"
+        mc:Ignorable="d"
+        xmlns:converter="clr-namespace:WPFConverterLibrary.Converters"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <ResourceDictionary>
+            <converter:EmptyValueToVisibilityConverter x:Key="EmptyValueToVisibilityConverter"/>
+            <converter:InverseBoolCollapsedConverter x:Key="InverseBoolCollapsedConverter"/>
+            <converter:ToUpperConverter x:Key="ToUpperConverter"/>
+            <converter:ToLowerConverter x:Key="ToLowerConverter"/>
+            <converter:HideEmptyCollectionConverter x:Key="HideEmptyCollectionConverter"/>
+            <converter:NumberToCurrencyConverter x:Key="NumberToCurrencyConverter"/>
+            <converter:DoubleToRoundedValueConverter x:Key="DoubleToRoundedValueConverter"/>
+            <converter:RelativeDateTimeConvertor x:Key="RelativeDateTimeConvertor"/>
+            <converter:LuminanceToBrushConverter x:Key="LuminanceToBrushConverter"/>
+            <converter:ByteToDoubleConverter x:Key="ByteToDoubleConverter"/>
+        </ResourceDictionary>
+    </Window.Resources>
+    <StackPanel Background="{Binding LuminaceLight, Converter={StaticResource LuminanceToBrushConverter}}">
+        <Label Content="{Binding FullValAmount, Converter={StaticResource NumberToCurrencyConverter}}"/>
+        <Label Content="{Binding FullValAmount, Converter={StaticResource DoubleToRoundedValueConverter}}"/>
+        <Label Content="{Binding UserName}" HorizontalAlignment="Center"/>
+        <Label Content="{Binding UserName, Converter={StaticResource ToUpperConverter}}"
+                Visibility="{Binding UserName, Converter={StaticResource EmptyValueToVisibilityConverter}}"
+                HorizontalAlignment="Center" />
+        <Label Content="{Binding UserName, Converter={StaticResource ToLowerConverter}}" HorizontalAlignment="Center" />
+        <Label Content="{Binding Date, Converter={StaticResource RelativeDateTimeConvertor}}" HorizontalAlignment="Center" />
+        <Label Content="There are no values in the list right now"
+               Visibility="{Binding ElementName=MyListView, Path=IsVisible, Converter={StaticResource InverseBoolCollapsedConverter}}"/>
+        <ListView ItemsSource="{Binding Items}"
+                  x:Name="MyListView" 
+                  Visibility="{Binding Items, Converter={StaticResource HideEmptyCollectionConverter}}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Label Content="{Binding .}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Border Margin="0,2,0,0" VerticalAlignment="Center" Width="200" Height="2" Background="{Binding LuminanceDark, Converter={StaticResource LuminanceToBrushConverter}}"></Border>
+        <TextBlock Margin="0,2,0,0" Text="{Binding ColorBrush.Color.R, Converter={StaticResource ByteToDoubleConverter}}"></TextBlock>
+    </StackPanel>
+</Window>
