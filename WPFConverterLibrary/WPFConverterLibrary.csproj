@@ -63,7 +63,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Converters\BoolToCollapsedVisibilityConverter.cs" />
     <Compile Include="Converters\BoolToHiddenVisibilityConverter.cs" />
     <Compile Include="Converters\ByteToDoubleConverter.cs" />
     <Compile Include="Converters\ColorToSolidColorBrushConverter.cs" />
